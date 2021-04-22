@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddEvents">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/eventName_text_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:hint="@string/event_name">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/eventName_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/selectTime_text_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/eventName_text_input"
+        android:layout_margin="10dp"
+        android:hint="@string/select_time">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/selectTime_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+             />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="180dp"
+        android:layout_marginLeft="30dp"
+        android:id="@+id/pick_date_button"
+        android:text="@string/pick_date"
+        android:onClick="showDatePickerDialog" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="190dp"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:onClick="showDatePickerDialog"
+        android:textColor="@color/colorPrimary"
+        android:id="@+id/display_date_text"/>
+
+    <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="250dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/design_default_color_primary"
+            android:layout_marginLeft="10dp"
+            android:text="@string/reminder_time"/>
+
+        <TimePicker
+            android:id="@+id/time_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:timePickerMode="spinner" />
+    </LinearLayout>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="30dp"
+        android:layout_centerInParent="true"
+        android:text="@string/events"
+        android:backgroundTint="@color/colorButton"
+        android:id="@+id/add_events_button"
+        android:onClick="onClickAddEvents"
+         />
+
+
+</RelativeLayout>
