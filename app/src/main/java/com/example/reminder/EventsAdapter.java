@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.example.reminder.Database.EventsModel;
 
@@ -18,6 +19,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsView
     private LayoutInflater layoutInflater;
     private Context context;
     private ItemClickListener itemClickListener;
+    private TimePicker timePicker;
 
     public EventsAdapter(List<EventsModel> modelList, Context context, ItemClickListener clickListener){
         this.eventsModelList = modelList;
@@ -37,7 +39,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsView
     public void onBindViewHolder(@NonNull EventsAdapter.EventsViewHolder holder, int position) {
             EventsModel eventsModel = eventsModelList.get(position);
             String eventsName = eventsModel.getEventName();
-            String eventsTime = eventsModel.getTimeSelected();
+            String eventsTime = eventsModel.getHour()  +":"+ eventsModel.getMinute();
             String eventsDate = eventsModel.getDateSelected();
 
             holder.eventsNameView.setText(eventsName);

@@ -26,28 +26,11 @@ import androidx.room.InvalidationTracker;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
 public class AlarmBroadcastReceiver extends BroadcastReceiver {
-    public static final String MONDAY = "MONDAY";
-    public static final String TUESDAY = "TUESDAY";
-    public static final String WEDNESDAY = "WEDNESDAY";
-    public static final String THURSDAY = "THURSDAY";
-    public static final String FRIDAY = "FRIDAY";
-    public static final String SATURDAY = "SATURDAY";
-    public static final String SUNDAY = "SUNDAY";
     public static final String RECURRING = "RECURRING";
     public static final String TITLE = "TITLE";
-    private EventsModel eventsModel;
-    // eventsModel = new EventsModel(Alarm,"","",14,30);
-    private String eventName = "";
-    private String dateSelected = "";
-    private String timeSelected = "";
-    private int timeHour = 0;
-    private int timeMinute = 0;
+    public EventsModel eventsModel;
     private String currentDate;
-    private TimePicker timePicker;
-    private EventsDatabase eventsDatabase;
-    private String[] mDateSplit;
-    private String[] mTimeSplit;
-    private int mYear, mMonth, mHour, mMinute, mDay, mReceivedID;
+
 
 
 
@@ -63,37 +46,17 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
             Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
             if (!intent.getBooleanExtra(RECURRING, false)) {
                 startAlarmService(context, intent);
-            } {
+            }  {
+                if (alarmIsToday(intent)) {
+                    startAlarmService(context, intent);
+                } else{
+                    Toast.makeText(context, "CHECK YOUR DATE", Toast.LENGTH_SHORT).show();
+                }
+            }
 
-//            eventsDatabase = EventsDatabase.getInstance(context);
-//                     Calendar calendar = Calendar.getInstance();
-//                     AlarmService AlarmReceiver = new AlarmService();
-//
-//                     LiveData<List<EventsModel>> modelList = eventsDatabase.eventsDao().loadAllEvents();
-//
-//            if (modelList!=null){
-//
-//            dateSelected = eventsModel.getDateSelected();
-//            timeSelected = eventsModel.getTimeSelected();
-//
-//            mDateSplit = dateSelected.split("-");
-//            mTimeSplit = timeSelected.split("-");
-//
-//            mDay = Integer.parseInt(mDateSplit[2]);
-//            mMonth = Integer.parseInt(mDateSplit[1]);
-//            mYear = Integer.parseInt(mDateSplit[0]);
-//            mHour = Integer.parseInt(mTimeSplit[0]);
-//            mMinute = Integer.parseInt(mTimeSplit[1]);
-//
-//            calendar.set(Calendar.MONTH, --mMonth);
-//            calendar.set(Calendar.YEAR, mYear);
-//            calendar.set(Calendar.DAY_OF_MONTH, mDay);
-//            calendar.set(Calendar.HOUR_OF_DAY, mHour);
-//            calendar.set(Calendar.MINUTE, mMinute);
-//            calendar.set(Calendar.SECOND, 0);
-//
-//            startAlarmService(context,intent);}
-        }}}
+        }}
+
+
 
 
 
@@ -101,14 +64,12 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         int today = calendar.get(Calendar.DAY_OF_MONTH);
-
-       // if (eventsModel.getDateSelected().equals(currentDate));
-        Log.d("Today's Date", "The value of getDateSelected is showing");
-       return true;
+        return true;
     }
     
     private boolean DateChecker(EventsModel eventsModel){
-     if (eventsModel.getDateSelected().equals(currentDate));
+        Log.d("AlarmDate", "Show Date in Alarm Class");
+     //if (eventsModel.getDateSelected().equals(currentDate));
      return true;
     }
 

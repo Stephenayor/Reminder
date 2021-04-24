@@ -53,19 +53,15 @@ public class AddEvents extends AppCompatActivity {
     private String timeSelected;
     private String dateSelected;
     private int eventsId = DEFAULT_EVENT_ID;
-    private Context context;
-    private  EventsModel eventsModel;
+    public  EventsModel eventsModel;
     public AlarmManager alarmManager;
     private PendingIntent alarmIntent;
     private TimePicker timePicker;
     private static Calendar calendar = Calendar.getInstance();
-    private DatePickerDialog datePickerDialog;
-    private DatePicker view;
     private static int year;
     private static int month;
     private static int day;
-    private int hour;
-    private int minute;
+
 
 
 
@@ -78,8 +74,6 @@ public class AddEvents extends AppCompatActivity {
         setContentView(R.layout.activity_add_events);
         eventNameInput = findViewById(R.id.eventName_text_input);
         eventNameEditText = findViewById(R.id.eventName_edit_text);
-        selectTimeInput = findViewById(R.id.selectTime_text_input);
-        selectTimeEditText = findViewById(R.id.selectTime_edit_text);
         textView = findViewById(R.id.display_date_text);
         datePickerButton = findViewById(R.id.pick_date_button);
         addEventsButton = findViewById(R.id.add_events_button);
@@ -87,43 +81,44 @@ public class AddEvents extends AppCompatActivity {
         timePicker = findViewById(R.id.time_picker);
 
 
-        selectTimeEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final Calendar myCalender = Calendar.getInstance();
-                int hour = myCalender.get(Calendar.HOUR_OF_DAY);
-                int minute = myCalender.get(Calendar.MINUTE);
-
-
-                TimePickerDialog.OnTimeSetListener myTimeListener = new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        String am_pm;
-                        if (hourOfDay >= 12) {
-                            am_pm = "PM";
-                        } else {
-                            am_pm = "AM";
-                        }
-                        selectTimeEditText.setText(hourOfDay + ":" + minute + "" + am_pm);
-
-
-                        if (view.isShown()) {
-                            myCalender.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                            myCalender.set(Calendar.MINUTE, minute);
-
-                        }
-                    }
-                };
-                TimePickerDialog timePickerDialog = new TimePickerDialog(AddEvents.this,
-                        android.R.style.Theme_Holo_Light_Dialog_NoActionBar, myTimeListener, hour, minute, true);
-                timePickerDialog.setTitle("Choose hour:");
-                timePickerDialog.getWindow().setBackgroundDrawableResource(android.R.color.darker_gray);
-                timePickerDialog.show();
-
-            }
-
-
-        });
+//        selectTimeEditText.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                final Calendar myCalender = Calendar.getInstance();
+////                int hour = myCalender.get(Calendar.HOUR_OF_DAY);
+////                int minute = myCalender.get(Calendar.MINUTE);
+////
+////
+////                TimePickerDialog.OnTimeSetListener myTimeListener = new TimePickerDialog.OnTimeSetListener() {
+////                    @Override
+////                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+////                        String am_pm;
+////                        if (hourOfDay >= 12) {
+////                            am_pm = "PM";
+////                        } else {
+////                            am_pm = "AM";
+////                        }
+////                        selectTimeEditText.setText(hourOfDay + ":" + minute + "" + am_pm);
+////
+////
+////                        if (view.isShown()) {
+////                            myCalender.set(Calendar.HOUR_OF_DAY, hourOfDay);
+////                            myCalender.set(Calendar.MINUTE, minute);
+////
+////                        }
+////                    }
+////                };
+////                TimePickerDialog timePickerDialog = new TimePickerDialog(AddEvents.this,
+////                        android.R.style.Theme_Holo_Light_Dialog_NoActionBar, myTimeListener, hour, minute, true);
+////                timePickerDialog.setTitle("Choose hour:");
+////                timePickerDialog.getWindow().setBackgroundDrawableResource(android.R.color.darker_gray);
+////                timePickerDialog.show();
+//                timePicker.is24HourView();
+//
+//            }
+//
+//
+//        });
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(EXTRA_EVENT_ID)) {
@@ -157,7 +152,7 @@ public class AddEvents extends AppCompatActivity {
         }
 
         eventNameEditText.setText(eventsModel.getEventName());
-        selectTimeEditText.setText(eventsModel.getTimeSelected());
+        //selectTimeEditText.setText(eventsModel.getTimeSelected());
         Log.d("Date values", "Date return value");
         datePickerButton.setText(eventsModel.getDateSelected());
 
@@ -242,25 +237,8 @@ public class AddEvents extends AppCompatActivity {
         alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
          final Calendar calendar = Calendar.getInstance();
          calendar.setTimeInMillis(System.currentTimeMillis());
-
+            // The date selected by the user
             String selectedDate = eventsModel.getDateSelected();
-
-//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//            LocalDate localDate = LocalDate.parse(selectedDate,formatter);
-//            DateTimeFormatter secondDateFormat = DateTimeFormatter.ofPattern("yyyy");
-//            DateTimeFormatter thirdDateFormat = DateTimeFormatter.ofPattern("MM");
-//            DateTimeFormatter fourthDateFormat = DateTimeFormatter.ofPattern("d");
-//            String chosenYear = localDate.format(secondDateFormat);
-//            String chosenMonth = localDate.format(thirdDateFormat);
-//            String chosenDay = localDate.format(fourthDateFormat);
-//            int year = Integer.parseInt(chosenYear);
-//            int month = Integer.parseInt(chosenMonth);
-//            int day = Integer.parseInt(chosenDay);
-//            calendar.set(Calendar.YEAR, year);
-//            calendar.set(Calendar.MONTH, month);
-//            calendar.set(Calendar.DAY_OF_MONTH, day);
-//        }
 
           String[] chosenDate = selectedDate.split("-");
           String year = chosenDate[0];
@@ -269,7 +247,6 @@ public class AddEvents extends AppCompatActivity {
           int chosenYear =Integer.parseInt(year);
           int chosenMonth = Integer.parseInt(month);
           int chosenDay = Integer.parseInt(day);
-
 
 
         calendar.set(Calendar.YEAR,chosenYear);
@@ -287,6 +264,11 @@ public class AddEvents extends AppCompatActivity {
         );
 
     }
-
+    //TODO :
+    // 1. The notification should display the alarm name
+    // 2. Make the timepicker attractive
+    // 3. Check the date again
+    // 4. Clean the code more
+    // 5. Use MVVM
 }
 
