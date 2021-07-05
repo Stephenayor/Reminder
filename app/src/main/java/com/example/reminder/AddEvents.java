@@ -198,7 +198,7 @@ public class AddEvents extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void onClickAddEvents(View view) {
         eventName = eventNameEditText.getText().toString();
-        timeSelected = selectTimeEditText.getText().toString();
+       // timeSelected = selectTimeEditText.getText().toString();
         dateSelected = textView.getText().toString();
 
         saveEvents();
